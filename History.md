@@ -33,3 +33,5 @@
 
 19. now creating the city model with ``` npx sequelize model:generate --name City --attributes name:string ``` and ``` npx sequelize db:migrate```
 
+20. Now adding the city-repository
+21. now adding the city-service

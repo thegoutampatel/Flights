@@ -29,4 +29,7 @@
 
 17. Now it Resolve my error
 
-18. 
+18. Later now i create and update function that can update the capacity of airplnae with the :ID
+
+19. now creating the city model with ``` npx sequelize model:generate --name City --attributes name:string ``` and ``` npx sequelize db:migrate```
+

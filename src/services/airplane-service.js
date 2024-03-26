@@ -58,9 +58,27 @@ async function getAirplanes() {
     }
  }
 
+ // Having some Bugs. Later i fix it.
+ async function updateAirplane(id, data) {
+    try {
+        // Call the service function to update the airplane
+        const updatedAirplane = await AirplaneService.updateAirplane(id, data);
+
+        // Return the updated airplane data
+        return updatedAirplane;
+    } catch (error) {
+        if (error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError('The airplane you requested to update is not present', error.statusCode);
+        }
+        throw new AppError('Cannot update the airplane data', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
+
 module.exports = {
     createAirplane, 
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplane
 }

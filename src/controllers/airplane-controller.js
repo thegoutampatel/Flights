@@ -82,9 +82,37 @@ async function destroyAirplane(req , res) {
     }
 }
 
+// UPDAETE --> /airplane/:id
+// i creating this update api but can't work properly later i fix This
+async function updateAirplane(req, res) {
+    try {
+        // Extract airplane ID from request parameters
+        const airplaneId = req.params.id;
+        
+        // Extract updated data from request body
+        const updatedData = req.body;
+
+        // Call the service function to update the airplane
+        const updatedAirplane = await AirplaneService.updateAirplane(airplaneId, updatedData);
+
+        // Send success response with the updated airplane data
+        SuccessResponse.data = updatedAirplane;
+        
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+          
+    } catch (error) {
+                  
+        ErrorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json( ErrorResponse );
+    }
+}
+
+
+
 module.exports = {
     createAirplane,
     getAirplanes,
     getAirplane,
-    destroyAirplane
+    destroyAirplane,
+    updateAirplane
 };

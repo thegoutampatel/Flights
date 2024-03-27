@@ -35,3 +35,10 @@
 
 20. Now adding the city-repository
 21. now adding the city-service
+22. now adding the middleware for both the airplane and the city
+23. Defines Route for Creating a city
+
+24. adding the getcity, getCites and destroycity in CityService.js
+
+25. Defines Routes for them.
+

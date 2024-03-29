@@ -42,3 +42,9 @@
 
 25. Defines Routes for them.
 
+26. Now Creating a Airport model with Commad ```npx sequelize model:generate --name Airport --attributes name:string,code:string,address:string,cityId:integer ``` and with Attributes in it
+
+27. added the validation for the Airport in Both js and Migrate Files.
+
+28. Creating Forign key with the CityId present in the Airport Model.
+29. 

@@ -47,4 +47,10 @@
 27. added the validation for the Airport in Both js and Migrate Files.
 
 28. Creating Forign key with the CityId present in the Airport Model.
-29. 
+29. Create a Migration with No code we have to implement According to Our's  --> ``` npx sequelize migration:generate --name update-city-airport-association ```
+
+30. Now Define the code in that migrate file and then run Command ``` npx sequelize db:migrate ``` to Migrate the data into Database.
+
+31. Then Added the same migration at the JAVASCRIPT Level now adding in the Airport Model in the ``` static Assosiation Colum``` 
+
+32. 

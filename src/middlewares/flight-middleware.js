@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 
 const { ErrorResponse } = require("../utils/common");
 const AppError = require("../utils/errors/app-error");
+const {compareTime} = require('../utils/helpers');
 
 function validateCreateRequest(req, res, next) {
   if (!req.body.flightNumber) {
@@ -69,8 +70,17 @@ function validateCreateRequest(req, res, next) {
     return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
   }
 
+  //This Function compare the both arrival time and the departure time that arrival time is always gerater than the departure time
+  if (compareTime(req.body.departureTime, req.body.arrivalTime)) {
+    // Handle the case where departure time is after arrival time
+    ErrorResponse.message = "Something went wrong while creating Flight";
+    ErrorResponse.error = new AppError(
+      ["Arrival time should be greater than the Departure time"],
+      StatusCodes.BAD_REQUEST
+    );
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
   
-
   next();
 }
 

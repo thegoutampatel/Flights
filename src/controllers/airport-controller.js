@@ -6,7 +6,7 @@ const { SuccessResponse, ErrorResponse } = require("../utils/common");
 
 async function createAirport(req, res) {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const airport = await AirportService.createAirport({
       name: req.body.name,
       code: req.body.code,

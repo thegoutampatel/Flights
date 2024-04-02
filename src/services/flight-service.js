@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { FlightRepository } = require("../repositories");
-
+const {Op} = require('sequelize');
+//require the operators from the Sequelize to implement the filters/Query.
 const AppError = require("../utils/errors/app-error");
 //now we can add this error file and after removing the try catch in crud repo
 
@@ -29,6 +30,61 @@ async function createFlight(data) {
   }
 }
 
+async function getAllFlights(query){
+  let customFilter = {};
+  let sortFilter = [];
+  
+  //trips = MUM- DEL
+  if(query.trips){
+    [departureAirportId, arrivalAirportId] = query.trips.split("-");
+
+    customFilter.departureAirportId = departureAirportId;
+    customFilter.arrivalAirportId = arrivalAirportId;
+
+    //ToDO : Check the arrival and departure airport are not same
+  }
+
+  if (query.price) {
+    // console.log("Query Price:", query.price); // Log the query price
+    const [minPrice, maxPrice] = query.price.split("-");
+    customFilter.price = {
+      [Op.between]: [minPrice, ((maxPrice == undefined) ? 20000 : maxPrice)]
+    };
+  }
+
+  if (query.travellers) {
+    customFilter.totalSeats = { 
+      [Op.gte]: query.travellers
+    };
+  }
+
+  if (query.tripDate) {
+    const startDate = new Date(query.tripDate);
+    const endDate = new Date(new Date(query.tripDate).setHours(23, 59, 59, 999)); 
+    // Set end time to 23:59:59.999 to cover the entire day
+    
+    customFilter.departureTime = {
+      [Op.between]: [startDate, endDate]
+    };
+  }
+
+  if(query.sort){
+    const params = query.sort.split(',');
+    const sortFilters = params.map((param) => param.split('_'));
+    sortFilter = sortFilters             
+  }
+
+
+  try {
+    const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
+    return flights;
+    
+  } catch (error) {
+    throw new AppError('Cannot Fetch the Data of all Flights', StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
 module.exports = {
   createFlight,
+  getAllFlights
 };

@@ -1,5 +1,6 @@
 const CrudRepository = require('./crud-repository');
-const { Flight } = require('../models')
+const { Flight, Airplane } = require('../models');
+//For the Airplane Details we need to Import this Airplane Model.
 
 
 
@@ -11,7 +12,8 @@ class FlightRepository extends CrudRepository {
     async getAllFlights(filter, sort){
         const response = await Flight.findAll({
             where: filter,
-            order: sort
+            order: sort,
+            include: [{ model: Airplane }]    // Include Airplane model to fetch airplane details
         });
         return response;
     }

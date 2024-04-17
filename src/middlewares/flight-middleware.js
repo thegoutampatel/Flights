@@ -53,22 +53,22 @@ function validateCreateRequest(req, res, next) {
     );
     return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
   }
-  if (!req.body.price) {
-    ErrorResponse.message = "Something went wrong while creating Flight";
-    ErrorResponse.error = new AppError(
-      ["price not found in the oncoming request in the correct form"],
-      StatusCodes.BAD_REQUEST
-    );
-    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
-  }
-  if (!req.body.totalSeats) {
-    ErrorResponse.message = "Something went wrong while creating Flight";
-    ErrorResponse.error = new AppError(
-      ["totalSeats not found in the oncoming request in the correct form"],
-      StatusCodes.BAD_REQUEST
-    );
-    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
-  }
+    if (!req.body.price) {
+      ErrorResponse.message = "Something went wrong while creating Flight";
+      ErrorResponse.error = new AppError(
+        ["price not found in the oncoming request in the correct form"],
+        StatusCodes.BAD_REQUEST
+      );
+      return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
+    if (!req.body.totalSeats) {
+      ErrorResponse.message = "Something went wrong while creating Flight";
+      ErrorResponse.error = new AppError(
+        ["totalSeats not found in the oncoming request in the correct form"],
+        StatusCodes.BAD_REQUEST
+      );
+      return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
 
   //This Function compare the both arrival time and the departure time that arrival time is always gerater than the departure time
   if (compareTime(req.body.departureTime, req.body.arrivalTime)) {
@@ -84,6 +84,20 @@ function validateCreateRequest(req, res, next) {
   next();
 }
 
+function validateUpdateSeatsRequest( req, res, next){ 
+  if (!req.body.seats) {
+    ErrorResponse.message = "Something went wrong while creating Flight";
+    ErrorResponse.error = new AppError(
+      ["Seats not found in the oncoming request in the correct form"],
+      StatusCodes.BAD_REQUEST
+    );
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
+  next();
+}
+
+
 module.exports = {
   validateCreateRequest,
+  validateUpdateSeatsRequest
 };

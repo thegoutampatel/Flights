@@ -22,7 +22,7 @@ class FlightRepository extends CrudRepository {
         
         const flight = await Flight.findByPk(flightId);
         
-        if(parseInt(dec)){
+        if(+dec){
             await flight.decrement('totalSeats', {by: seats});
         }else{
             await flight.increment('totalSeats', {by: seats});
